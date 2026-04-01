@@ -7,8 +7,9 @@ const PORT = 3000;
 connectDB();
 
 app.use(express.json());
+app.use("/public", express.static("public"));
 
-app.use("/api/users", require("./routes/userRoutes"))
+app.use("/api/users", require("./routes/userRoutes"));
 
 app.get('/', (req, res) => {
     res.send("Hello World")

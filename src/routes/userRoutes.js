@@ -1,6 +1,8 @@
 const express = require("express")
 const router = express.Router();
 const upload = require("../helper/fileUploads")
+const validate = require("../middlewares/validate")
+const { createUserValidator } = require("../validators/userValidator")
 
 const {
     createUser,
@@ -10,7 +12,7 @@ const {
     deleteUser,
 } = require("../controllers/userController");
 
-router.post("/", upload.single("avatar"), createUser);
+router.post("/", upload.single("avatar"), createUserValidator, validate, createUser);
 router.get("/", getUsers);
 router.get("/:id", getUser);
 router.put("/:id", updateUser);
