@@ -1,8 +1,10 @@
+require('dotenv').config();
 const express = require("express")
 const connectDB = require("./config/db")
 const user = require("./models/userModel")
 const app = express();
 const PORT = 3000;
+
 
 connectDB();
 
