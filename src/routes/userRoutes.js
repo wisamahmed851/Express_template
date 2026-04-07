@@ -11,9 +11,11 @@ const {
     updateUser,
     deleteUser,
 } = require("../controllers/userController");
+const { authMiddleware } = require("../middlewares/authMiddleware");
+const { adminOnly } = require("../middlewares/roleMiddleware");
 
 router.post("/", upload.single("avatar"), createUserValidator, validate, createUser);
-router.get("/", getUsers);
+router.get("/", authMiddleware, adminOnly, getUsers);
 router.get("/:id", getUser);
 router.put("/:id", updateUser);
 router.delete("/:id", deleteUser);
