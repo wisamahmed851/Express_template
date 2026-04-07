@@ -1,25 +1,31 @@
-const jwt = require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
 
 const authMiddleware = (req, res, next) => {
     try {
-        const token = req.header("Authorization");
+        const authHeader = req.header("Authorization");
 
-        if (!token) {
+        if (!authHeader) {
             return res.status(401).json({
                 status: false,
                 message: "Access denied. No Token provided",
             });
         }
 
+        // Remove Bearer
+        const token = authHeader.split(" ")[1];
+
+        console.log("TOKEN ONLY:", token);
+
         const verified = jwt.verify(token, process.env.JWT_SECRET);
 
         req.user = verified;
-        next;
+
+        next();
     } catch (err) {
         console.log(err);
-        res.status(500).json({
+        return res.status(401).json({
             status: false,
-            error: err
+            error: err.message
         });
     }
 }

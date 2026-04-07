@@ -27,3 +27,17 @@ exports.loginUserValidation = [
     body("password")
     .notEmpty().withMessage("Password is required"),
 ];
+exports.updateProfileValidation = [
+    body("name")
+        .optional()
+        .isLength({ min: 3 }).withMessage("Name must be at least 3 characters"),
+    body("phone")
+        .optional()
+        .isMobilePhone().withMessage("Invalid phone number"),
+    body("address")
+        .optional()
+        .isLength({ min: 5 }).withMessage("Address must be at least 5 characters"),
+    body("gender")
+        .optional()
+        .isIn(["male", "female", "other"]).withMessage("Gender must be male, female or other"),
+];
