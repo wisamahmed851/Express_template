@@ -62,3 +62,22 @@ exports.updateProfile = async (req, res, next) => {
         next(err);
     }
 };
+
+exports.refresh = async (req, res, next) => {
+    try {
+        const { refreshToken } = req.body;
+        const data = await refreshAccessToken(refreshToken);
+        res.json({ status: true, ...data });
+    } catch (err) {
+        next(err);
+    }
+};
+
+exports.logout = async (req, res, next) => {
+    try {
+        await logoutUser(req.user.id); // authMiddleware runs before this
+        res.json({ status: true, message: "Logged out successfully" });
+    } catch (err) {
+        next(err);
+    }
+};

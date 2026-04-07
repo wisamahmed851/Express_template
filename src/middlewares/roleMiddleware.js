@@ -4,7 +4,6 @@ exports.adminOnly = async (req, res, next) => {
             status: false,
             message: "Access Denied. Admin only",
         });
-
-        next();
     }
+    next();
 }

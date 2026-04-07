@@ -31,6 +31,10 @@ const userSchema = new mongoose.Schema({
         type: Number,
         default: 1
     },
+    refereshToken: {
+        tyep: String,
+        default: null
+    },
     // add this to your userSchema
     role: {
         type: String,
