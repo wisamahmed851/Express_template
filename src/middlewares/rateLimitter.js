@@ -7,7 +7,7 @@ exports.generalLimiter = rateLimit({
     standardHeaders: true,
     legacyHeaders: false,
 });
-exports.authLimiter = rateLimt({
+exports.authLimiter = rateLimit({
     windowMs: 15 * 60 * 100,
     max: 10,
     message: { status: false, message: "Too many attempts, try again later" },

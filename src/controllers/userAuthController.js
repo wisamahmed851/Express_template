@@ -1,7 +1,7 @@
 const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { loginUser, getUserById, register, updateProfile } = require("../services/userAuthService")
+const { loginUser, getUserById, register, updateProfile, logoutUser, refreshAccessToken } = require("../services/userAuthService")
 
 exports.login = async (req, res, next) => {
     try {
@@ -66,6 +66,7 @@ exports.updateProfile = async (req, res, next) => {
 exports.refresh = async (req, res, next) => {
     try {
         const { refreshToken } = req.body;
+        console.log(refreshToken);
         const data = await refreshAccessToken(refreshToken);
         res.json({ status: true, ...data });
     } catch (err) {

@@ -13,7 +13,7 @@ connectDB();
 app.use(express.json());
 app.use("/public", express.static("public"));
 app.use(helmet());
-app.user(generalLimiter);
+app.use(generalLimiter);
 
 app.use("/api/admin/users", require("./routes/userRoutes"));
 app.use("/api/users", require("./routes/userAuthRoutes"));

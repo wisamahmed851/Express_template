@@ -5,7 +5,7 @@ const upload = require("../helper/fileUploads")
 const { authMiddleware } = require("../middlewares/authMiddleware")
 const { loginUserValidation, createUserValidator, updateProfileValidation } = require("../validators/userValidator")
 
-const { login, profile, register, updateProfile } = require("../controllers/userAuthController");
+const { login, profile, register, updateProfile, refresh, logout } = require("../controllers/userAuthController");
 const { authLimiter } = require("../middlewares/rateLimitter");
 
 router.post("/login", loginUserValidation, validate, login);
