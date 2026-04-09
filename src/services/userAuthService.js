@@ -2,6 +2,7 @@ const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { generateAccessToken, generateRefereshToekn } = require("../utils/token");
+const crypto = require("crypto");
 
 exports.loginUser = async ({ email, password }) => {
     const user = await User.findOne({ email });
@@ -83,3 +84,19 @@ exports.refreshAccessToken = async (token) => {
 exports.logoutUser = async (userId) => {
     await User.findByIdAndUpdate(userId, { refreshToken: null });
 };
+
+exports.forgotPassword = async (email) => {
+    const user = await User.findOne({ email });
+
+    if (!user) return;
+
+    const rawToken = crypto.randomBytes(32).toString("hex");
+    const hashed = crypto.createHash("sha256").update(rawToken).digest("hex");
+
+    user.passwordResetToken = hashed;
+    user.passwordResetExpires = Date.now() + 10 * 60 * 1000;
+    await user.save;
+
+    const resetURL = `${process.env.CLIENT_URL}/reset-password/${rawToken}`;
+    await sendResetEmail(user.email, resetURL);
+}
